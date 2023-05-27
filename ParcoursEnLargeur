@@ -1,0 +1,78 @@
+#Breadth-First Search
+graphe={ 
+    '1' : ['2','5','4'],
+    '2' : ['3','4'],
+    '3':['2'],
+    '4':['3'],
+    '5':['4'],
+    '6':['7'],
+    '6':['7'],
+    '7':['5'],
+    '8':['7','6','4']
+    }
+
+#parcours result DESC : 1-5-4-2-3-8-7-6
+#parcours result ASC  : 1-2-4-5-3-6-7-8
+
+# graphe={ 'a' : ['b','c','d'], 'c' : ['b','e'],'b':[], 'd':['e'], 'e':['f'],'f':['a']}
+
+
+def ParcoursEnLargeur(graphe,sommet,order=""):
+    # Mettre le sommet d'entrer dans la file
+    File = [sommet]   
+    # list sommet_hors_graphe contient tout les sommets du graphe                         
+    sommet_hors_graphe = graphe.keys()  
+    #Tant que la file n'est pas vide            
+    while File :        
+       #Défiler le sommet                              
+       sommet = File.pop(0)       
+
+       #Traiter le sommet retiré s'il existe dans le file 
+       if (not sommet in parcours):  
+            #Ajouter le sommet vérifiant les conditions dans la liste du parcours         
+            parcours.append(sommet)                       
+            LesSommets = graphe[sommet]
+            #trier par ordre décroissant ou croissant les succésseurs du sommet courant 
+            if order == "DESC":
+                LesSommets.sort(reverse=True)
+            else:
+                LesSommets.sort() 
+            #Afficher les sommets     
+            for sommet in LesSommets:                                      
+               if sommet not in File :
+                   #Enfiler les succésseurs du sommet courant
+                   File.append(sommet)  
+    #si la list File est vide [verifier l'existance des sommets hors graphe ]                      
+    if not File :
+        #comparaisan entre la liste de toute les sommets et la liste du parcours
+        sommet_hors_graphe = list(set(sommet_hors_graphe) - set(parcours))
+        #trier par ordre décroissant ou croissant la liste des sommets
+        if order == "DESC":
+            sommet_hors_graphe.sort(reverse=True)
+        else :
+            sommet_hors_graphe.sort()
+        # Mettre le sommet dans la file
+        File = [sommet_hors_graphe[0]]
+        #Tant que la file n'est pas vide    
+        while File :
+            #Défiler le sommet 
+            sommet = File.pop(0)
+            #Traiter le sommet retiré s'il existe dans le file 
+            if ( sommet not in parcours):
+                #Ajouter le sommet vérifiant les conditions dans la liste du parcours
+                parcours.append(sommet)
+                #Afficher les sommets
+                for sommet in graphe[sommet]:
+                        if sommet not in parcours:
+                            #Enfiler les succésseurs du sommet courant
+                            File.append(sommet)
+
+        check_last_sommet = list(set(graphe.keys()) - set(parcours))                    
+        if check_last_sommet:
+            for sommet in check_last_sommet:
+                parcours.append(sommet)
+            
+
+parcours = []
+ParcoursEnLargeur(graphe,'1')  # le parametre order est facultatif
+print (parcours)
