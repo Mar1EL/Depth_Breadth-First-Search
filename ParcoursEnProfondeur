@@ -1,0 +1,50 @@
+#Depth-First Search
+
+graphe = {'1': ['2', '4','5'],
+         '2': ['3', '4'],
+         '3': ['1'],
+         '4': ['3'],
+         '5': ['4'],
+         '6': ['7','8'],
+         '7': ['5'],
+         '8': ['4','6','7']
+}
+
+
+
+# graphe={ 'a' : ['b','c','d'], 'c' : ['b','e'],'b':[], 'd':['e'], 'e':['f'],'f':['a']}
+
+pile = []
+parcours=[]
+
+def ParcoursEnProfondeur(graphe,sommet_entrer,order=''):
+    #Liste des sommets du graphe
+    sommet_hors_graphe = graphe.keys()
+    #Empiler le sommet          
+    pile.append(sommet_entrer)      
+    LesSommets = graphe[sommet_entrer]
+    if order == "DESC":
+        LesSommets.sort(reverse=True)
+    else:
+        LesSommets.sort() 
+    for sommet in LesSommets:
+          #verifier si le sommet existe dans la pile ou si il n'a pas de succeseurs
+          if (not sommet in pile) or (len(graphe[sommet])==0):       
+              ParcoursEnProfondeur(graphe, sommet)    
+    #depiler le sommet qui n'a pas de succeseurs 
+    SommetDepiler=pile.pop()     
+    #verifier si le sommet existe dans la liste parcourus       
+    if (SommetDepiler not in parcours): 
+        parcours.append(SommetDepiler)
+    #on verifie si on a des sommets hors graphe
+    if (not pile):                        
+        if order == "DESC":               
+            sommet_hors_graphe = reversed(sommet_hors_graphe)  
+            
+        for i in sommet_hors_graphe:
+            if (i not in parcours) :
+                ParcoursEnProfondeur(graphe, i)              
+
+
+ParcoursEnProfondeur(graphe,'1')
+print(parcours)
