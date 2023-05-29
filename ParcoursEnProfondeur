@@ -30,7 +30,7 @@ def ParcoursEnProfondeur(graphe,sommet_entrer,order=''):
     for sommet in LesSommets:
           #verifier si le sommet existe dans la pile ou si il n'a pas de succeseurs
           if (not sommet in pile) or (len(graphe[sommet])==0):       
-              ParcoursEnProfondeur(graphe, sommet)    
+              ParcoursEnProfondeur(graphe, sommet, order)    
     #depiler le sommet qui n'a pas de succeseurs 
     SommetDepiler=pile.pop()     
     #verifier si le sommet existe dans la liste parcourus       
@@ -43,7 +43,7 @@ def ParcoursEnProfondeur(graphe,sommet_entrer,order=''):
             
         for i in sommet_hors_graphe:
             if (i not in parcours) :
-                ParcoursEnProfondeur(graphe, i)              
+                ParcoursEnProfondeur(graphe, i, order)              
 
 
 ParcoursEnProfondeur(graphe,'1')
