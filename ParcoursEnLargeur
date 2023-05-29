@@ -43,7 +43,7 @@ def ParcoursEnLargeur(graphe,sommet,order=""):
                    #Enfiler les succésseurs du sommet courant
                    File.append(sommet)  
     #si la list File est vide [verifier l'existance des sommets hors graphe ]                      
-    if not File :
+    if not File and len(sommet_hors_graphe) != 0:
         #comparaisan entre la liste de toute les sommets et la liste du parcours
         sommet_hors_graphe = list(set(sommet_hors_graphe) - set(parcours))
         #trier par ordre décroissant ou croissant la liste des sommets
@@ -62,15 +62,16 @@ def ParcoursEnLargeur(graphe,sommet,order=""):
                 #Ajouter le sommet vérifiant les conditions dans la liste du parcours
                 parcours.append(sommet)
                 #Afficher les sommets
+                LesSommets = graphe[sommet]
+                #trier par ordre décroissant ou croissant les succésseurs du sommet courant 
+                if order == "DESC":
+                    LesSommets.sort(reverse=True)
+                else:
+                    LesSommets.sort()                 
                 for sommet in graphe[sommet]:
                         if sommet not in parcours:
                             #Enfiler les succésseurs du sommet courant
                             File.append(sommet)
-
-        check_last_sommet = list(set(graphe.keys()) - set(parcours))                    
-        if check_last_sommet:
-            for sommet in check_last_sommet:
-                parcours.append(sommet)
             
 
 parcours = []
