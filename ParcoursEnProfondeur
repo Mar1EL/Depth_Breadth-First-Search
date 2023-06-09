@@ -37,13 +37,15 @@ def ParcoursEnProfondeur(graphe,sommet_entrer,order=''):
     if (SommetDepiler not in parcours): 
         parcours.append(SommetDepiler)
     #on verifie si on a des sommets hors graphe
-    if (not pile):                        
-        if order == "DESC":               
-            sommet_hors_graphe = reversed(sommet_hors_graphe)  
-            
-        for i in sommet_hors_graphe:
-            if (i not in parcours) :
-                ParcoursEnProfondeur(graphe, i, order)              
+    if (not pile):      
+         sommet_hors_graphe = list(set(sommet_hors_graphe) - set(parcours))                           
+        if order == 'DESC':
+            sommet_hors_graphe.sort(reverse=True)
+        else:
+            sommet_hors_graphe.sort()         
+        for sommet in sommet_hors_graphe:        
+            if (sommet not in parcours) :
+                ParcoursEnProfondeur(graphe, sommet, order)              
 
 
 ParcoursEnProfondeur(graphe,'1')
